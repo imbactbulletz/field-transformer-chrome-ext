@@ -12,22 +12,7 @@ function onIconClicked() {
         const currentState = !previousState;
 
         chrome.storage.sync.set({isExtensionEnabled: currentState});
-
-        if (currentState) {
-            changeIcon(true);
-            chrome.tabs.query({currentWindow: true}, function (tabs) {
-                for(let i = 0; i < tabs.length; i++) {
-                    chrome.tabs.sendMessage(tabs[i].id, {isExtensionEnabled: true})
-                }
-            });
-        } else {
-            changeIcon( false);
-            chrome.tabs.query({currentWindow: true}, function (tabs) {
-                for(let i = 0; i < tabs.length; i++) {
-                    chrome.tabs.sendMessage(tabs[i].id, {isExtensionEnabled: false})
-                }
-            });
-        }
+        changeIcon(currentState)
     })
 }
 
